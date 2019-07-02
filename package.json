@@ -1,0 +1,20 @@
+{
+  "name": "globalaccelerextask",
+  "version": "1.0.0",
+  "description": "task for backend position",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhosun/globalAccelerexTask.git"
+  },
+  "author": "Olatunbosun Olabisi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bhosun/globalAccelerexTask/issues"
+  },
+  "homepage": "https://github.com/bhosun/globalAccelerexTask#readme"
+}
