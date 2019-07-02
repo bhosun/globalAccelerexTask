@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/bhosun/globalAccelerexTask/issues"
   },
-  "homepage": "https://github.com/bhosun/globalAccelerexTask#readme"
+  "homepage": "https://github.com/bhosun/globalAccelerexTask#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
