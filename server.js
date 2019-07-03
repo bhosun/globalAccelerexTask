@@ -58,6 +58,40 @@ app.post("/comments", (req, res) => {
     });
 });
 
+
+// GET CHARACTER LIST FOR AN EPISODE 
+app.get("/characters/:id", (req, res) => {
+    const id = req.params.id;
+    console.log(req.query);
+    fetch(`https://rickandmortyapi.com/api/episode/${id}`)
+    .then(res => res.json())
+    .then((json) => {
+        if(typeof req.query.gender != 'undefined') {
+            for(let i = 0; i < json["characters"].length; i++) {
+                const dele = json["characters"][i];
+                const tryio = dele[dele.length - 1];
+                fetch(`https://rickandmortyapi.com/api/character/${tryio}`)
+                .then(res => res.json())
+                .then((ayinde) => {
+                    if((ayinde.gender == req.query.gender) && (req.query.sortBy && req.query.orderBy)){
+                        // console.log(ayinde.name + " + " + ayinde.id);
+                        const gbenga = [ayinde.name];
+                        // console.log(gbenga);
+                        console.log("==============================");
+                        const dele = gbenga.sort();
+                        console.log(dele);
+                    }
+                })
+            }
+        }
+        // SORT PARAMETER
+        if(req.query.sortByname && req.query.orderByasc) {
+
+        }
+    })
+});
+// console.log(json["characters"]);
+
 app.listen(3000, () => {
     console.log('The server for your challenge just got started');
 });
