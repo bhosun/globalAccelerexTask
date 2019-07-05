@@ -1,5 +1,6 @@
 const express       = require("express");
 const bodyParser    = require("body-parser");
+const port          = process.env.PORT | 3000;
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,6 +21,6 @@ app.use("/", commentRoute);
 // GET CHARACTER LIST FOR AN EPISODE 
 app.use("/", characterRoute);
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log('The server for your challenge just got started');
 });
