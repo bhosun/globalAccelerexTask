@@ -11,6 +11,12 @@ const episodeRoute    = require("./routes/episode.routes");
 const commentRoute    = require("./routes/comment.routes");
 const characterRoute  = require("./routes/character.route");
 
+app.get("/", (req, res) => {
+    res.status(200).json({
+        "status": "success",
+        "message": "Welcome to the Api do well to check my github"
+    });
+})
 // route to Get the EPISODES
 app.use("/", episodeRoute);
 
