@@ -8,7 +8,7 @@ const getEpisodes = (req, res) => {
             res.status(200).json({
                 status: "success",
                 data: yea.forEach((ini) => {
-                    console.log(`EPISODE: ${ini.episode} ======= TITLE: ${ini.name}`);
+                        console.log(`EPISODE: ${ini.episode} ======= TITLE: ${ini.name}`);
                  })
             });
     })

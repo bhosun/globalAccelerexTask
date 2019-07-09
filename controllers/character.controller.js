@@ -1,29 +1,41 @@
 const fetch = require("node-fetch");
 
-const getCharacters = (req, res) => {
-    const id = req.params.id;
-    if(id != 'undefined' && id != '') {
-        fetch(`https://rickandmortyapi.com/api/episode/${id}`)
-        .then(res => res.json())
-        .then((json) => {
-            const characterUrl = json["characters"]
-            for(let i = 0; i < characterUrl.length; i++) {
-                const great = characterUrl[i].length - 1;
-                const lastNumber = characterUrl[i][great];
-                fetch(`https://rickandmortyapi.com/api/character/${lastNumber}`)
-                .then(res => res.json())
-                .then((json) => {
-                    // Filter by gender
-                    if(json.gender == req.query.gender) {
-                        const names = json["name"];
-                        console.log(names);
-                    }
+class characters { 
+    
+    static async getCharacters(req, res) {
+        try {
+            const id = req.params.id;
+            if(id != 'undefined' && id != '') {
+                const fetchedEpisode = await fetch(`https://rickandmortyapi.com/api/episode/${id}`)
+                const converted = await fetchedEpisode.json();
+                const charactersUrl = await converted["characters"]
+                let lastSet, lastNumber;
+                charactersUrl.map(now => {
+                    lastSet = now.length - 1
+                    lastNumber = now[lastSet]
+                    console.log(lastNumber);
+                    fetch(`https://rickandmortyapi.com/api/character/${lastNumber}`)
+                    .then(res => res.json())
+                    .then(json => {
+                        if(json.gender == req.query.gender) {
+                            const names = json["name"];
+                            console.log(names);
+                        }
+                    })    
                 });
+            } else {
+                res.status(400).json("There is an error with the id inputed!")
             }
-        })
-    } else {
-        res.status(400).json("There is an error with the Id Inputed")
+        }
+        catch(err) {
+            res.status(400).json({
+                status: "error!!",
+                message: err.message
+            })
+        };
     }
+
 }
 
-module.exports = getCharacters;
+module.exports = characters;
+

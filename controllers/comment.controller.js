@@ -1,31 +1,44 @@
-const bodyParser    = require("body-parser");
-const pool          = require("../models/basics");
+const pool = require("../models/basics");
 
-const getallComments = (req, res) => {
-    pool.query('SELECT * FROM comment', (err, data) => {
-        if(err) {
-            throw err;
+class comments{
+    static async getallComments(req, res) {
+        try {
+            pool.query('SELECT * FROM comment', (err, data) => {
+                if(err) {
+                    throw err;
+                }
+                return res.status(200).json(data.rows);
+            });
         }
-        res.status(200).json(data.rows)
-    });
-}
-
-
-const postAComment = (req, res) => {
-    const { comment } = req.body;
-    if(!comment) {
-        res.status(400).json("Make sure to input the given fields");
+        catch(err) {
+            return res.status(400).json({
+                status: "error!",
+                message: err.message
+            });
+        }
     }
-    pool.query('INSERT INTO comment (comment) VALUES ($1)', [comment], (err, data) => {
-        if(err) {
-            throw err
+    
+    
+    static async postAComment(req, res) {
+        try {
+            const { comment } = await req.body;
+            if(!comment) {
+                res.status(400).json("Make sure to input the given fields");
+            }
+            pool.query('INSERT INTO comment (comment) VALUES ($1)', [comment], (err, data) => {
+                if(err) {
+                    throw err
+                }
+                return res.status(201).json("Successfully added!!");
+            });
         }
-        console.log(req.body);
-        res.status(201).json("Successfully added!!");
-    });
+        catch(err) {
+            return res.status(400).json({
+                status: "error!!",
+                message: err.message
+            });
+        }
+    }
 }
 
-module.exports = {
-    getallComments,
-    postAComment
-};
+module.exports = comments;

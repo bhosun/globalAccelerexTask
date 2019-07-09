@@ -1,25 +1,28 @@
 const express       = require("express");
 const bodyParser    = require("body-parser");
+const port          = process.env.PORT || 3000;
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // ROUTES
-const episodeRoute    = require("./routes/episode.routes");
-const commentRoute    = require("./routes/comment.routes");
-const characterRoute  = require("./routes/character.route");
+const episodeRoute    = require("./controllers/episode.controller");
+const commentRoute    = require("./controllers/comment.controller");
+const characterRoute  = require("./controllers/character.controller");
 
-// route to Get the EPISODES
-app.use("/", episodeRoute);
+app.get("/", (req, res) => {
+    res.status(200).json({
+        "status": "success",
+        "message": "Welcome to the Api do well to check my github"
+    });
+})
 
-// ADDING AND LISTING COMMENTS FOR AN EPISODE
-app.use("/", commentRoute);
-app.use("/", commentRoute);
+app.get("/episodes", episodeRoute);
+app.get("/comments", commentRoute.getallComments);
+app.post("/comments", commentRoute.postAComment);
+app.get("/characters/:id", characterRoute.getCharacters);
 
-// GET CHARACTER LIST FOR AN EPISODE 
-app.use("/", characterRoute);
-
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log('The server for your challenge just got started');
 });
